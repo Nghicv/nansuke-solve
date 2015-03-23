@@ -1,0 +1,60 @@
+package nghicv.com.util;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Locale.Category;
+import java.util.Map;
+
+public class NansukeQuestions {
+	private Matrix mMatrix;
+	private String[] mListNumber;
+	private  ArrayList<Integer> category=new ArrayList<Integer>();
+	private HashMap<Integer, ArrayList<int []>> listTypeNumber;
+	public NansukeQuestions(Matrix mMatrix,String[] mListNumner){
+		this.mMatrix=mMatrix;
+		this.mListNumber=mListNumner;
+		listTypeNumber=getTypeNumber();
+	}
+	private HashMap<Integer, ArrayList<int []>> getTypeNumber(){
+		HashMap<Integer, ArrayList<int []>> mHashMap=new HashMap<Integer,ArrayList<int []>>();
+		for(int i=0;i<mListNumber.length;i++){
+			String s=mListNumber[i];
+			Integer length=s.length();
+			int arr[]=new int[length];
+			for(int j=0;j<length;j++){
+				int num=Integer.valueOf(s.substring(j, j+1));
+				arr[j]=num;
+				System.out.println(num);
+			}
+			if(mHashMap.containsKey(length)){
+				ArrayList<int[]> mList=mHashMap.get(length);
+				mList.add(arr);
+			}else{
+				ArrayList<int []> mList=new ArrayList<int[]>();
+				mList.add(arr);
+				mHashMap.put(length, mList);
+				category.add(length);
+				
+			}
+			
+		}
+		Collections.sort(category);
+		
+		return mHashMap;
+	}
+	public Matrix getMatrix(){
+		return this.mMatrix;
+	}
+	public String[] getListNumber(){
+		return this.mListNumber;
+	}
+	public ArrayList<Integer> getCategory(){
+		return category;
+	}
+	public HashMap<Integer, ArrayList<int []>> getListTypeNumber(){
+		return this.listTypeNumber;
+	}
+}

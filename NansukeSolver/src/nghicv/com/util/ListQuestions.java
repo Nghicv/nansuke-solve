@@ -1,0 +1,24 @@
+package nghicv.com.util;
+
+import java.util.ArrayList;
+
+public class ListQuestions {
+	private static int board1[][]={
+			{1,0,1,0},
+			{1,1,1,1},
+			{0,0,1,1},
+			{1,1,0,0}
+			
+	};
+	private static String listNumber1[]={"12","2345","146","67","13"};
+	private static int board2[][]={
+		{1,0,1,1,1},
+		{1,1,1,1,1},
+		{1,0,1,1,0},
+		{1,1,1,1,1},
+		{0,1,1,0,1}
+		
+	};
+	private static String listNumber2[]={"1234","23456","345","57","47689","97","79","34567","4579","56","82"};
+	public static Nansuke[] arrNansukeQuestions={new Nansuke(new Matrix(board2), listNumber2)};
+}
