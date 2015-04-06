@@ -1,11 +1,11 @@
 package nghicv.com.util;
 
 import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Locale.Category;
 import java.util.Map;
 
 import nghicv.com.nansukesolver.Variable;
