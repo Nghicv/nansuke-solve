@@ -1,0 +1,88 @@
+package nghicv.com.main;
+
+import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.LayoutManager;
+import java.awt.Panel;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
+
+import nghicv.com.util.FileUtil;
+import nghicv.com.util.NansukeUtil;
+import nghicv.com.util.Nansuke;
+import nghicv.com.util.NansukeSolver;
+
+import org.sat4j.minisat.*;
+public class Main {
+	public static void main(String [] args){
+		
+		
+		///////
+		Nansuke mNansuke=NansukeUtil.arrNansukeQuestions[0];
+		HashMap<Integer,ArrayList<int []>> mHashMap=mNansuke.getListTypeNumber();
+		ArrayList<Integer> category=mNansuke.getCategory();
+		for(int i=0;i<category.size();i++){
+			int item =category.get(i);
+			System.out.println(item);
+			ArrayList<int []> listSequenceNum=mHashMap.get(item);
+			for(int j=0;j<listSequenceNum.size();j++){
+				int []arr=listSequenceNum.get(j);
+				System.out.println(arr.length);
+				for(int k=0;k<arr.length;k++){
+					
+					System.out.print(arr[k]+" ");
+				}
+				System.out.println();
+			}
+			System.out.println();
+		}
+		mNansuke.printTypeCell();
+		mNansuke.makeCNF();
+		NansukeSolver.Solver("data.txt");
+		
+		
+		JFrame mFrame=new JFrame();
+		mFrame.setSize(1000,800 );
+		
+		mFrame.setLayout(null);
+		JPanel mpanel=new JPanel();
+		mpanel.setLayout(null);
+		mpanel.setSize(300, 800);
+		mpanel.setBackground(Color.blue);
+		mpanel.setEnabled(true);
+		mpanel.setLocation(700, 0);
+		JLabel lableMatrix=new JLabel("Size :");
+		lableMatrix.setLocation(50, 50);
+		mpanel.add(lableMatrix);
+		String [] typeMatrix={"4x4","5x5","9x9","20x20"};
+		JComboBox mComboBox=new JComboBox(typeMatrix);
+		mComboBox.setLocation(170, 50);
+		mComboBox.setSize(100, 40);
+		mComboBox.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JComboBox cb=(JComboBox)e.getSource();
+				String itemSelect=(String) cb.getSelectedItem();
+				System.out.println(itemSelect);
+				
+			}
+		});
+		mpanel.add(mComboBox);
+		mFrame.add(mpanel);
+		mFrame.setVisible(true);
+		
+	}
+}

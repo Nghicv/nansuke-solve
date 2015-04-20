@@ -1,0 +1,34 @@
+package nghicv.com.test;
+
+
+public class Test {
+	
+	
+	public static void main(String [] args){
+		encode(19, 19, 7);
+		decode("76");
+	}
+	
+	public static String encode(int row, int col, int number){
+		int sizecol=20;
+		String s="";
+		int var=row*sizecol+col;
+		s=""+var+""+number;
+		System.out.println(s);
+		return s;
+		
+	}
+	public static  void decode(String s){
+		int sizeCol=4;
+	
+		char ch=s.charAt(s.length()-1);
+		int number=Integer.parseInt(String.valueOf(ch));
+		String sub=s.substring(0, s.length()-1);
+		int position=Integer.parseInt(sub);
+		int row =position/sizeCol;
+		int col=position%sizeCol;
+	//	Variable var=new Variable(row,col);
+		System.out.print(""+row+" "+col+" "+number);
+	}
+
+}

@@ -1,0 +1,32 @@
+package nghicv.com.test;
+
+
+public class Test {
+	
+	
+	public static void main(String [] args){
+		encode(3, 4, 0);
+	}
+	
+	public static String encode(int row, int col, int number){
+		int sizecol=4;
+		String s="";
+		s=""+col*sizecol+row;
+		System.out.print(s);
+		return s;
+		
+	}
+	public static  void decode(String s){
+		int sizeCol=4;
+	
+		char ch=s.charAt(s.length()-1);
+		int number=Integer.parseInt(String.valueOf(ch));
+		String sub=s.substring(0, s.length()-2);
+		int position=Integer.parseInt(sub);
+		int row =position/sizeCol;
+		int col=position%sizeCol;
+	//	Variable var=new Variable(row,col);
+		System.out.print(""+row+" "+col);
+	}
+
+}

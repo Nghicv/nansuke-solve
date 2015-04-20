@@ -1,48 +1,39 @@
 package nghicv.com.main;
 
 import java.awt.Color;
-
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Label;
 import java.awt.LayoutManager;
 import java.awt.Panel;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
+import javax.swing.border.Border;
 
 import nghicv.com.util.FileUtil;
-import nghicv.com.util.ListQuestions;
+import nghicv.com.util.NansukeUtil;
 import nghicv.com.util.Nansuke;
+import nghicv.com.util.NansukeSolver;
 
 import org.sat4j.minisat.*;
 public class Main {
 	public static void main(String [] args){
 		
-		
-		///////
-		Nansuke mNansukeQuestions=ListQuestions.arrNansukeQuestions[0];
-		HashMap<Integer,ArrayList<int []>> mHashMap=mNansukeQuestions.getListTypeNumber();
-		ArrayList<Integer> category=mNansukeQuestions.getCategory();
-		for(int i=0;i<category.size();i++){
-			int item =category.get(i);
-			System.out.println(item);
-			ArrayList<int []> listSequenceNum=mHashMap.get(item);
-			for(int j=0;j<listSequenceNum.size();j++){
-				int []arr=listSequenceNum.get(j);
-				System.out.println(arr.length);
-				for(int k=0;k<arr.length;k++){
-					
-					System.out.print(arr[k]+" ");
-				}
-				System.out.println();
-			}
-			System.out.println();
-		}
-		mNansukeQuestions.printTypeCell();
-		
+		NansukeSolver msolver=new NansukeSolver();
 		
 	}
 }
