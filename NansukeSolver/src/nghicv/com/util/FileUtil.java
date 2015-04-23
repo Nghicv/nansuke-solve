@@ -15,7 +15,6 @@ public class FileUtil {
 			FileWriter fw=new FileWriter(file,true);
 			BufferedWriter bufferedWriter=new BufferedWriter(fw);
 			bufferedWriter.write(s);
-			bufferedWriter.newLine();
 			bufferedWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch bclock

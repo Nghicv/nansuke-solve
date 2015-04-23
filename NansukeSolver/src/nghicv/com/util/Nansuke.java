@@ -183,7 +183,9 @@ public class Nansuke {
 	public void makeCNF(){
 		String stringCNF="";
 		for(int i=0;i<category.size();i++){
+			
 			int typeNumber=category.get(i);
+			System.out.println("category: "+typeNumber);
 			ArrayList<int[]> listNumber=listTypeNumber.get(typeNumber);
 			ArrayList<Cell[]> listCell=listTypeCell.get(typeNumber);
 			
@@ -193,10 +195,11 @@ public class Nansuke {
 				//duyet moi vi tri nhan gia tri tu 1->9
 				for(int l=0;l<arrCell.length;l++){
 					Cell cell=arrCell[l];
+					
 					for(int k=1;k<10;k++){
-						stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
+				//		stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
 					}
-					stringCNF=stringCNF+"0"+"\n";
+			//		stringCNF=stringCNF+"0"+"\n";
 					
 				}
 				
@@ -268,14 +271,28 @@ public class Nansuke {
 				for(int k=0;k<listNumber.size();k++){
 					int [] arrNum=listNumber.get(k);
 					for(int l=1;l<arrNum.length;l++){
-						stringCNF=stringCNF+"-"+encode(arrCell[0], arrNum[0])+" "+encode(arrCell[l],arrNum[l])+" 0"+"\n";
+						stringCNF=stringCNF+"-"+encode(arrCell[0], arrNum[0])+" "+encode(arrCell[l],arrNum[l])+" 0"+'\n';
 					}
 				}
 			}
 			//loai tru .
-			
-			
-			
+			for(int j=0;j<listNumber.size();j++){
+				int arrNum[]=listNumber.get(j);
+				for(int k=0;k<listCell.size();k++){
+					Cell arrCell1[]=listCell.get(k);
+					for(int l=k+1;l<listCell.size();l++){
+						Cell arrCell2[]=listCell.get(l);
+						for(int m=0;m<arrCell1.length;m++){
+							stringCNF=stringCNF+"-"+encode(arrCell1[m],arrNum[m])+" ";
+						}
+						for(int m=0;m<arrCell2.length;m++){
+							stringCNF=stringCNF+"-"+encode(arrCell2[m], arrNum[m])+" ";
+						}
+						stringCNF=stringCNF+"0"+"\n";
+					}
+				}
+			}
+						
 		}
 		int clauseNum=0;
 		int index = 0;
@@ -300,15 +317,15 @@ public class Nansuke {
 			}
 			
 		}
-		stringCNF = "p cnf " +encode(new Cell(x, y), 9)+ " " + clauseNum + " \n" + stringCNF;
-		System.out.println(stringCNF);
+		stringCNF = "p cnf " +encode(new Cell(x, y), 9)+ " " + clauseNum + "\n" + stringCNF;
+		//System.out.println(stringCNF);
 		FileUtil.clearFile();
 		FileUtil.writerFile(stringCNF);
 	}
 	public String encode(Cell var, int number){
 		int sizecol=mMatrix.getColumn();
 		String s="";
-		int i=var.getRow()*sizecol+var.getCol();
+		int i=var.getRow()*sizecol+var.getCol()+1;
 		s=i+""+number;
 			return s;
 		
@@ -317,7 +334,7 @@ public class Nansuke {
 		int sizeCol=mMatrix.getColumn();
 	
 		char ch=s.charAt(s.length()-1);
-		int number=Integer.parseInt(String.valueOf(ch));
+		int number=Integer.parseInt(String.valueOf(ch))-1;
 		String sub=s.substring(0, s.length()-1);
 		int position=Integer.parseInt(sub);
 		int row =position/sizeCol;

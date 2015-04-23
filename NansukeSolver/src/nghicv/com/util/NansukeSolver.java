@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import nghicv.com.nansukesolver.Cell;
 
@@ -32,7 +33,7 @@ public class NansukeSolver {
 	private JLabel labelMatrix[][];
 	private JPanel panelMatrix;
 	private JPanel panelListNum;
-	private JLabel labelListNumber;
+	private JTextArea labelListNumber;
 	private JLabel labelTime;
 	private ArrayList<Cell> listCell;
 	public NansukeSolver(){
@@ -119,10 +120,12 @@ public class NansukeSolver {
 		panelListNum.setLocation(0, 530);
 		panelListNum.setBackground(Color.white);
 		panelListNum.setLayout(null);
-		labelListNumber=new JLabel();
+		labelListNumber=new JTextArea();
 		labelListNumber.setSize(700, 250);
+		labelListNumber.setEditable(false);
+		labelListNumber.setLineWrap(true);
 		labelListNumber.setLocation(0, 0);
-		labelListNumber.setHorizontalAlignment(JLabel.CENTER);
+		
 		panelListNum.add(labelListNumber);
 		
 		mFrame.add(panelListNum);
@@ -182,7 +185,7 @@ public class NansukeSolver {
 				}
 				s=s+s1+"    ";
 			}
-			s=s+'\n';
+			s=s+"\n";
 		}
 		
 		
@@ -196,18 +199,22 @@ public class NansukeSolver {
 		mNansuke.makeCNF();
 		Calendar cal=Calendar.getInstance();
 		long timeStart=cal.getTimeInMillis();
+		System.out.println("time start: "+timeStart);
 		long timeEnd=0;
         ISolver solver = SolverFactory.newDefault();
         solver.setTimeout(3600); 
         Reader reader = new DimacsReader(solver);
         try {
             IProblem problem = reader.parseInstance("data.txt");
-            timeEnd=cal.getTimeInMillis();
-            long time=timeEnd-timeStart;
-            labelTime.setText(""+time+" ms");
+         
+          
             if (problem.isSatisfiable()) {
                 System.out.println("Satisfiable !");
                 System.out.println(reader.decode(problem.model()));
+                timeEnd=cal.getTimeInMillis();
+                System.out.println("time: "+timeEnd);
+                long time=timeEnd-timeStart;
+                labelTime.setText(""+time+" ms");
             } else {
                 System.out.println("Unsatisfiable !");
             }
