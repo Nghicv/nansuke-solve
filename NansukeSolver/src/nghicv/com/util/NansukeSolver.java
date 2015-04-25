@@ -14,6 +14,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import nghicv.com.nansukesolver.Cell;
 
@@ -35,7 +41,7 @@ public class NansukeSolver {
 	private JPanel panelListNum;
 	private JTextArea labelListNumber;
 	private JLabel labelTime;
-	private ArrayList<Cell> listCell;
+	private ArrayList<Cell> listCell=new ArrayList<Cell>();
 	public NansukeSolver(){
 		init();
 	}
@@ -53,17 +59,23 @@ public class NansukeSolver {
 		
 		panelMenu=new JPanel();
 		panelMenu.setLayout(null);
-		panelMenu.setSize(300,800);
-		panelMenu.setBackground(Color.gray);
-		panelMenu.setLocation(700, 0);
+		panelMenu.setSize(299,800);
+		panelMenu.setBackground(Color.LIGHT_GRAY);
+		panelMenu.setLocation(701, 0);
+		
+		JPanel panelLine=new JPanel();
+		panelLine.setBackground(Color.GRAY);
+		panelLine.setSize(1, 800);
+		panelLine.setLocation(700, 0);
+		mFrame.add(panelLine);
 		
 		JLabel labelSize=new JLabel("Size :");
-		labelSize.setSize(70, 50);
+		labelSize.setSize(50, 50);
 		labelSize.setLocation(50, 50);
 		panelMenu.add(labelSize);
 		
 		mComboBox=new JComboBox(listLabelNansuke);
-		mComboBox.setLocation(170, 50);
+		mComboBox.setLocation(150, 50);
 		mComboBox.setSize(100, 40);
 		mComboBox.addActionListener(new ActionListener() {
 			
@@ -79,7 +91,7 @@ public class NansukeSolver {
 				}
 				mNansuke=NansukeUtil.arrNansukeQuestions[index];
 				initMatrix();
-				
+				listCell.clear();
 			}
 		});
 		panelMenu.add(mComboBox);
@@ -92,6 +104,7 @@ public class NansukeSolver {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Solver();
+				
 				System.out.println("clicked");
 				
 			}
@@ -124,6 +137,8 @@ public class NansukeSolver {
 		labelListNumber.setSize(700, 250);
 		labelListNumber.setEditable(false);
 		labelListNumber.setLineWrap(true);
+		labelListNumber.setWrapStyleWord(true);
+		labelListNumber.setAlignmentX(10);
 		labelListNumber.setLocation(0, 0);
 		
 		panelListNum.add(labelListNumber);
@@ -165,13 +180,8 @@ public class NansukeSolver {
 				}
 			}
 		}
-		/*String listNumber[]=mNansuke.getListNumber();
-		String s="";
-		for(int i=0;i<listNumber.length;i++){
-			s=s+listNumber[i]+"   ";
-		}*/
-		
-		String s="";
+	
+		String s="\n";
 		ArrayList<Integer> category=mNansuke.getCategory();
 		HashMap<Integer, ArrayList<int[]>> mMap=mNansuke.getListTypeNumber();
 		for(int i=0;i<category.size();i++){
@@ -185,7 +195,7 @@ public class NansukeSolver {
 				}
 				s=s+s1+"    ";
 			}
-			s=s+"\n";
+			s="  "+s+"\n";
 		}
 		
 		
@@ -210,11 +220,21 @@ public class NansukeSolver {
           
             if (problem.isSatisfiable()) {
                 System.out.println("Satisfiable !");
-                System.out.println(reader.decode(problem.model()));
+                //System.out.println(reader.decode(problem.model()));
+                String listNum=reader.decode(problem.model());
+                System.out.println(listNum);
+                String s[]=listNum.split(" ");
+                System.out.println(s[s.length-1]);
+                for(int i=0;i<s.length-1;i++){
+                	Cell cell=mNansuke.decode(s[i]);
+                	listCell.add(cell);
+                //	System.out.println("col:"+cell.getCol()+" "+"row:"+cell.getRow()+" index:"+cell.getIndex()+" istrue:"+cell.isTrue());
+                }
                 timeEnd=cal.getTimeInMillis();
                 System.out.println("time: "+timeEnd);
                 long time=timeEnd-timeStart;
                 labelTime.setText(""+time+" ms");
+                fillCell();
             } else {
                 System.out.println("Unsatisfiable !");
             }
@@ -226,10 +246,12 @@ public class NansukeSolver {
 	private void fillCell(){
 		for(int i=0;i<listCell.size();i++){
 			Cell cell=listCell.get(i);
-			int row=cell.getRow();
-			int col=cell.getCol();
-			int index=cell.getIndex();
-			labelMatrix[row][col].setText(""+index);
+			if(cell.isTrue()){
+				int row=cell.getRow();
+				int col=cell.getCol();
+				int index=cell.getIndex();
+				labelMatrix[row][col].setText(""+index);
+			}
 		}
 	}
 	

@@ -6,8 +6,16 @@ public class Cell {
 	private int row;
 	private int col;
 	private int index;
+	boolean isTrue=false;
 	
-	
+	public boolean isTrue() {
+		return isTrue;
+	}
+
+	public void setTrue(boolean isTrue) {
+		this.isTrue = isTrue;
+	}
+
 	public Cell(int row, int col, int index) {
 		super();
 		this.row = row;

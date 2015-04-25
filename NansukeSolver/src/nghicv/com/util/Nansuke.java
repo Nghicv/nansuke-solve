@@ -76,7 +76,7 @@ public class Nansuke {
 						flag--;
 						System.out.println("gia tri cua k="+k+" "+i);
 					}
-					mList.add(arrCelliable);
+					mList.add(sortArrayCell(arrCelliable));
 				}else{
 					if((mMatrix.get(i, j)==0&&count==type)){
 						count=0;
@@ -93,7 +93,7 @@ public class Nansuke {
 							flag--;
 							System.out.println("gia tri cua k="+k+" "+i);
 						}
-						mList.add(arrCelliable);
+						mList.add(sortArrayCell(arrCelliable));
 					
 					}else{
 						if(mMatrix.get(i, j)==0){
@@ -121,7 +121,7 @@ public class Nansuke {
 						flag--;
 						System.out.println("gia tri cua k="+k+" "+i);
 					}
-					mList.add(arrCelliable);
+					mList.add(sortArrayCell(arrCelliable));
 				}else{
 					if((mMatrix.get(j, i)==0&&count==type)){
 						count=0;
@@ -138,7 +138,7 @@ public class Nansuke {
 							flag--;
 							System.out.println("gia tri theo doc cua k="+k+" "+i);
 						}
-						mList.add(arrCelliable);
+						mList.add(sortArrayCell(arrCelliable));
 			
 					}else{
 						if(mMatrix.get(j, i)==0){
@@ -197,9 +197,9 @@ public class Nansuke {
 					Cell cell=arrCell[l];
 					
 					for(int k=1;k<10;k++){
-				//		stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
+						stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
 					}
-			//		stringCNF=stringCNF+"0"+"\n";
+					stringCNF=stringCNF+"0"+"\n";
 					
 				}
 				
@@ -273,7 +273,14 @@ public class Nansuke {
 					for(int l=1;l<arrNum.length;l++){
 						stringCNF=stringCNF+"-"+encode(arrCell[0], arrNum[0])+" "+encode(arrCell[l],arrNum[l])+" 0"+'\n';
 					}
+				
 				}
+				for(int k=0;k<listNumber.size();k++){
+					int arrNum[]=listNumber.get(k);
+					stringCNF=stringCNF+encode(arrCell[0], arrNum[0])+" ";
+					System.out.println("gfmmfmffmfmfmfm");
+				}
+				stringCNF=stringCNF+"0"+"\n";
 			}
 			//loai tru .
 			for(int j=0;j<listNumber.size();j++){
@@ -294,6 +301,7 @@ public class Nansuke {
 			}
 						
 		}
+		//dem so menh de va bien max.
 		int clauseNum=0;
 		int index = 0;
 		while( index < stringCNF.length()) 
@@ -321,6 +329,8 @@ public class Nansuke {
 		//System.out.println(stringCNF);
 		FileUtil.clearFile();
 		FileUtil.writerFile(stringCNF);
+		System.out.println("xong gile cnf.");
+		printTypeCell();
 	}
 	public String encode(Cell var, int number){
 		int sizecol=mMatrix.getColumn();
@@ -332,19 +342,55 @@ public class Nansuke {
 	}
 	public Cell decode(String s){
 		int sizeCol=mMatrix.getColumn();
+		Cell cell;
+		if(s.contains("-")){
 	
-		char ch=s.charAt(s.length()-1);
-		int number=Integer.parseInt(String.valueOf(ch))-1;
-		String sub=s.substring(0, s.length()-1);
-		int position=Integer.parseInt(sub);
-		int row =position/sizeCol;
-		int col=position%sizeCol;
-		Cell var=new Cell(row,col);
-		return var;
+			char ch=s.charAt(s.length()-1);
+			int number=Integer.parseInt(String.valueOf(ch));
+			String sub=s.substring(0, s.length()-1);
+			int position=Math.abs(Integer.parseInt(sub))-1;
+			int row =position/sizeCol;
+			int col=position%sizeCol;
+			cell=new Cell(row,col,number);
+			cell.setTrue(false);
+		}else{
+		
+			char ch=s.charAt(s.length()-1);
+			int number=Integer.parseInt(String.valueOf(ch));
+			String sub=s.substring(0, s.length()-1);
+			int position=Integer.parseInt(sub)-1;
+			int row =position/sizeCol;
+			int col=position%sizeCol;
+			cell=new Cell(row,col,number);
+			cell.setTrue(true);
+		}
+		return cell;
 	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return mMatrix.getRow()+ " x "+mMatrix.getColumn();
+	}
+	
+	public Cell[] sortArrayCell(Cell[] arrCell){
+		Cell[] arr=new Cell[arrCell.length];
+		if(arrCell[0].getRow()==arrCell[1].getRow()){
+			if(arrCell[0].getCol()>arrCell[1].getCol()){
+				int length=arr.length;
+				for(int i=0;i<arr.length;i++){
+					arr[length-1]=arrCell[i];
+					length--;
+				}
+			}
+		}else{
+			if(arrCell[0].getRow()>arrCell[1].getRow()){
+				int length=arr.length;
+				for(int i=0;i<arr.length;i++){
+					arr[length-1]=arrCell[i];
+					length--;
+				}
+			}
+		}
+		return arr;
 	}
 }

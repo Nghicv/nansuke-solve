@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 public class NansukeUtil {
 	private static int board0[][]={
-		{1,0,1,0},
-		{1,1,1,1},
-		{0,0,1,1},
-		{1,1,0,0}
-		
+		{1,0,1},
+		{1,1,1},
+		{1,0,0}			
 };
-private static String listNumber0[]={"12","2345","146","67","13","57"};
+private static String listNumber0[]={"123","235","65"};
 	private static int board1[][]={
 			{1,0,1,0},
 			{1,1,1,1},
@@ -18,7 +16,7 @@ private static String listNumber0[]={"12","2345","146","67","13","57"};
 			{1,1,0,0}
 			
 	};
-	private static String listNumber1[]={"12","2345","146","67","13","57"};
+	private static String listNumber1[]={"12","2345","146","67","43","57"};
 	private static int board2[][]={
 		{1,0,1,1,1},
 		{1,1,1,1,1},
@@ -50,6 +48,6 @@ private static String listNumber0[]={"12","2345","146","67","13","57"};
 	
 	
 	
-	public static Nansuke[] arrNansukeQuestions={new Nansuke(new Matrix(board1), listNumber1),
+	public static Nansuke[] arrNansukeQuestions={new Nansuke(new Matrix(board0), listNumber0),new Nansuke(new Matrix(board1), listNumber1),
 		new Nansuke(new Matrix(board2), listNumber2),new Nansuke(new Matrix(board3), listNumber3)};
 }
