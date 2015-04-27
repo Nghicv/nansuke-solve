@@ -54,6 +54,7 @@ public class Nansuke {
 		for(int i=0;i<category.size();i++){
 			mHashMap.put(category.get(i), getListOfType(category.get(i)));
 		}
+		//printTypeCell();
 		
 		return mHashMap;
 		
@@ -266,22 +267,110 @@ public class Nansuke {
 				}
 			}
 			//keo theo 
+			ArrayList<int []> arrayOverlapNum=new ArrayList<int[]>();
+			
+			ArrayList<int []> arrayNoOverlapNum=new ArrayList<int[]>();
+			for(int j=0;j<listNumber.size();j++){
+				int [] arrNum=listNumber.get(j);
+				boolean flag=true;
+				for(int k1=j-1;k1>=0;k1--){
+					if(arrNum[0]==listNumber.get(k1)[0]){
+						flag=false;
+					}
+				}
+				for(int k2=j+1;k2<listNumber.size();k2++){
+					if(arrNum[0]==listNumber.get(k2)[0]){
+						flag=false;
+					}
+				}
+				
+				if(!flag){
+					arrayOverlapNum.add(arrNum);
+				}else{
+					arrayNoOverlapNum.add(arrNum);
+				}
+			}
+			/// no overlap
 			for(int j=0;j<listCell.size();j++){
 				Cell[] arrCell=listCell.get(j);
-				for(int k=0;k<listNumber.size();k++){
-					int [] arrNum=listNumber.get(k);
+				for(int k=0;k<arrayNoOverlapNum.size();k++){
+					int [] arrNum=arrayNoOverlapNum.get(k);
 					for(int l=1;l<arrNum.length;l++){
 						stringCNF=stringCNF+"-"+encode(arrCell[0], arrNum[0])+" "+encode(arrCell[l],arrNum[l])+" 0"+'\n';
 					}
 				
 				}
-				for(int k=0;k<listNumber.size();k++){
+				/*for(int k=0;k<listNumber.size();k++){
 					int arrNum[]=listNumber.get(k);
 					stringCNF=stringCNF+encode(arrCell[0], arrNum[0])+" ";
-					System.out.println("gfmmfmffmfmfmfm");
 				}
 				stringCNF=stringCNF+"0"+"\n";
+				
+				for(int k=0;k<listNumber.size();k++){
+					int arrNum[]=listNumber.get(k);
+					stringCNF=stringCNF+encode(arrCell[arrCell.length-1], arrNum[arrNum.length-1])+" ";
+				}
+				stringCNF=stringCNF+"0"+"\n";*/
+				for(int k=0;k<arrCell.length;k++){
+					for(int l=0;l<listNumber.size();l++){
+						int arrNum[]=listNumber.get(l);
+						stringCNF=stringCNF+encode(arrCell[k], arrNum[k])+" ";
+					}
+					stringCNF=stringCNF+"0"+"\n";
+				}
 			}
+			//////overlap
+			
+			ArrayList<Integer> arrValuePossible=new ArrayList<Integer>();
+			for(int j=0;j<arrayOverlapNum.size();j++){
+				int arrNum[]=arrayOverlapNum.get(j);
+				int v=arrNum[0];
+				boolean flag=true;
+				for(int k=0;k<arrValuePossible.size();k++){
+					int num=arrValuePossible.get(k);
+					if(v==num){
+						flag=false;
+						break;
+					}
+				}
+				if(flag){
+					arrValuePossible.add(v);
+				}
+			}
+			for(int j=0;j<listCell.size();j++){
+				Cell[] arrCell=listCell.get(j);
+				for(int k=0;k<arrValuePossible.size();k++){
+					
+					for(int n=1;n<arrCell.length;n++){
+						stringCNF=stringCNF+"-"+encode(arrCell[0], arrValuePossible.get(k))+" ";
+						ArrayList<Integer> arrValuePossible2=new ArrayList<Integer>();
+						for(int l=0;l<arrayOverlapNum.size();l++){
+							int valueFirst=arrayOverlapNum.get(l)[0];
+							int v=arrayOverlapNum.get(l)[n];
+							boolean flag=true;
+							for (int m = 0; m < arrValuePossible2.size(); m++) {
+								int v1 = arrValuePossible2.get(m);
+								if(v==v1){
+									flag = false;
+									break;
+								}
+							}
+							if(valueFirst!=arrValuePossible.get(k))
+								flag = false;
+							if(flag)
+								arrValuePossible2.add(v);
+						}
+						for (int l = 0; l < arrValuePossible2.size(); l++) {
+							stringCNF=stringCNF+encode(arrCell[n], arrValuePossible2.get(l))+" ";
+							System.out.println("da chay");
+						}
+						stringCNF=stringCNF+"0"+"\n";
+					
+					}
+				}
+			}
+			
+			
 			//loai tru .
 			for(int j=0;j<listNumber.size();j++){
 				int arrNum[]=listNumber.get(j);

@@ -1,5 +1,0 @@
-package nghicv.com.util;
-
-public class NansukeSolver {
-	private Nansuke mNansuke;
-}
