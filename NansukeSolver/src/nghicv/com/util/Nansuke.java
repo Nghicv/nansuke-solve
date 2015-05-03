@@ -198,9 +198,9 @@ public class Nansuke {
 					Cell cell=arrCell[l];
 					
 					for(int k=1;k<10;k++){
-						stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
+				//		stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
 					}
-					stringCNF=stringCNF+"0"+"\n";
+				//	stringCNF=stringCNF+"0"+"\n";
 					
 				}
 				
@@ -362,13 +362,22 @@ public class Nansuke {
 						}
 						for (int l = 0; l < arrValuePossible2.size(); l++) {
 							stringCNF=stringCNF+encode(arrCell[n], arrValuePossible2.get(l))+" ";
-							System.out.println("da chay");
 						}
 						stringCNF=stringCNF+"0"+"\n";
 					
 					}
 				}
 			}
+			/*for(int j=0;j<listCell.size();j++){
+				Cell arrCell[]=listCell.get(j);
+				for(int k=0;k<listNumber.size();k++){
+					int arrNum[]=listNumber.get(k);
+					for(int l=0;l<arrNum.length-1;l++){
+						stringCNF=stringCNF+"-"+encode(arrCell[l], arrNum[l])+" ";
+					}
+					stringCNF=stringCNF+encode(arrCell[arrNum.length-1],arrNum[arrNum.length-1])+" 0"+"\n";
+				}
+			}*/
 			
 			
 			//loai tru .
