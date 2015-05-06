@@ -15,6 +15,8 @@ public class Nansuke {
 	private  ArrayList<Integer> category=new ArrayList<Integer>();
 	private HashMap<Integer, ArrayList<int []>> listTypeNumber;
 	private HashMap<Integer, ArrayList<Cell[]>> listTypeCell;
+	private int soBien;
+	private int soMenhDe;
 	public Nansuke(Matrix mMatrix,String[] mListNumner){
 		this.mMatrix=mMatrix;
 		this.mListNumber=mListNumner;
@@ -30,7 +32,6 @@ public class Nansuke {
 			for(int j=0;j<length;j++){
 				int num=Integer.valueOf(s.substring(j, j+1));
 				arr[j]=num;
-				//System.out.println(num);
 			}
 			if(mHashMap.containsKey(length)){
 				ArrayList<int[]> mList=mHashMap.get(length);
@@ -75,7 +76,6 @@ public class Nansuke {
 						digit++;
 						k--;
 						flag--;
-						System.out.println("gia tri cua k="+k+" "+i);
 					}
 					mList.add(sortArrayCell(arrCelliable));
 				}else{
@@ -92,7 +92,6 @@ public class Nansuke {
 							digit++;
 							k--;
 							flag--;
-							System.out.println("gia tri cua k="+k+" "+i);
 						}
 						mList.add(sortArrayCell(arrCelliable));
 					
@@ -182,6 +181,8 @@ public class Nansuke {
 		}
 	}
 	public void makeCNF(){
+		soBien=0;
+		soMenhDe=0;
 		String stringCNF="";
 		for(int i=0;i<category.size();i++){
 			
@@ -198,7 +199,8 @@ public class Nansuke {
 					Cell cell=arrCell[l];
 					
 					for(int k=1;k<10;k++){
-				//		stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
+						//stringCNF=stringCNF+""+encode(arrCell[l],k)+" ";
+						soBien++;
 					}
 				//	stringCNF=stringCNF+"0"+"\n";
 					
@@ -240,7 +242,6 @@ public class Nansuke {
 				for(int k=0;k<arrCell.length;k++){
 					for(int l=0;l<valuesPossible.size();l++){
 						stringCNF=stringCNF+encode(arrCell[k], valuesPossible.get(l))+" ";
-						System.out.println("values possible "+valuesPossible.get(l));
 						
 					}
 					stringCNF=stringCNF+"0"+"\n";
@@ -300,17 +301,7 @@ public class Nansuke {
 					}
 				
 				}
-				/*for(int k=0;k<listNumber.size();k++){
-					int arrNum[]=listNumber.get(k);
-					stringCNF=stringCNF+encode(arrCell[0], arrNum[0])+" ";
-				}
-				stringCNF=stringCNF+"0"+"\n";
 				
-				for(int k=0;k<listNumber.size();k++){
-					int arrNum[]=listNumber.get(k);
-					stringCNF=stringCNF+encode(arrCell[arrCell.length-1], arrNum[arrNum.length-1])+" ";
-				}
-				stringCNF=stringCNF+"0"+"\n";*/
 				for(int k=0;k<arrCell.length;k++){
 					for(int l=0;l<listNumber.size();l++){
 						int arrNum[]=listNumber.get(l);
@@ -423,6 +414,7 @@ public class Nansuke {
 			}
 			
 		}
+		soMenhDe=clauseNum;
 		stringCNF = "p cnf " +encode(new Cell(x, y), 9)+ " " + clauseNum + "\n" + stringCNF;
 		//System.out.println(stringCNF);
 		FileUtil.clearFile();
@@ -491,4 +483,17 @@ public class Nansuke {
 		}
 		return arr;
 	}
+	public int getSoBien() {
+		return soBien;
+	}
+	public void setSoBien(int soBien) {
+		this.soBien = soBien;
+	}
+	public int getSoMenhDe() {
+		return soMenhDe;
+	}
+	public void setSoMenhDe(int soMenhDe) {
+		this.soMenhDe = soMenhDe;
+	}
+	
 }

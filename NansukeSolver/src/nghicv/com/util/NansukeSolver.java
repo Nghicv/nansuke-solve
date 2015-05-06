@@ -41,6 +41,8 @@ public class NansukeSolver {
 	private JPanel panelListNum;
 	private JTextArea labelListNumber;
 	private JLabel labelTime;
+	private JLabel labelVarNum;
+	private JLabel labelClauseNum;
 	private ArrayList<Cell> listCell=new ArrayList<Cell>();
 	public NansukeSolver(){
 		init();
@@ -121,6 +123,26 @@ public class NansukeSolver {
 		labelTime.setSize(100, 50);
 		labelTime.setLocation(130, 300);
 		panelMenu.add(labelTime);
+		////////
+		JLabel labelTitleVar=new JLabel("Số Biến :");
+		labelTitleVar.setSize(70, 50);
+		labelTitleVar.setLocation(50, 380);
+		panelMenu.add(labelTitleVar);
+		
+		labelVarNum=new JLabel();
+		labelVarNum.setSize(100, 50);
+		labelVarNum.setLocation(130, 380);
+		panelMenu.add(labelVarNum);
+		//////
+		JLabel labelTitleClause=new JLabel("Số MD :");
+		labelTitleClause.setSize(70, 50);
+		labelTitleClause.setLocation(50, 450);
+		panelMenu.add(labelTitleClause);
+		
+		labelClauseNum=new JLabel();
+		labelClauseNum.setSize(100, 50);
+		labelClauseNum.setLocation(130, 450);
+		panelMenu.add(labelClauseNum);
 		
 		panelMatrix=new JPanel();
 		panelMatrix.setSize(600,500);
@@ -207,8 +229,8 @@ public class NansukeSolver {
 	public void Solver()
 	{
 		mNansuke.makeCNF();
-		Calendar cal=Calendar.getInstance();
-		long timeStart=cal.getTimeInMillis();
+		//Calendar cal=Calendar.getInstance();
+		long timeStart=System.currentTimeMillis();
 		System.out.println("time start: "+timeStart);
 		long timeEnd=0;
         ISolver solver = SolverFactory.newDefault();
@@ -228,12 +250,13 @@ public class NansukeSolver {
                 for(int i=0;i<s.length-1;i++){
                 	Cell cell=mNansuke.decode(s[i]);
                 	listCell.add(cell);
-                //	System.out.println("col:"+cell.getCol()+" "+"row:"+cell.getRow()+" index:"+cell.getIndex()+" istrue:"+cell.isTrue());
                 }
-                timeEnd=cal.getTimeInMillis();
+                timeEnd=System.currentTimeMillis();
                 System.out.println("time: "+timeEnd);
                 long time=timeEnd-timeStart;
                 labelTime.setText(""+time+" ms");
+                labelVarNum.setText(mNansuke.getSoBien()+"");
+                labelClauseNum.setText(mNansuke.getSoMenhDe()+"");
                 fillCell();
             } else {
                 System.out.println("Unsatisfiable !");
